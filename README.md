@@ -18,8 +18,15 @@ Here are the data for the project:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
 ### Repository
-*GettingandCleaningDataCourseProject.Rproj: file project for RStudio
-*README.md: this file
-*run_analysis.R: R script that transforms the raw dataset in tidy one
-*secondData.txt: tidy data set with the average of each variable for each activity and each subject 
-*CodeBook.md: information the dataset and the elaboration made to transform them
+- GettingandCleaningDataCourseProject.Rproj: file project for RStudio
+- README.md: this file
+- run_analysis.R: R script that transforms the raw dataset in tidy one
+- secondData.txt: tidy data set with the average of each variable for each activity and each subject 
+- CodeBook.md: information the dataset and the elaboration made to transform them
+
+###Create the tidy dataset
+1. clone this repository
+2. set your working directory
+3. install packages httr,dplyr,plyr: <code> install.packages("httr","dplyr","plyr") </code>
+2. source run_analysis.R : <code>source("run_analysis.R")
+</code> 
