@@ -3,7 +3,7 @@
 
 ## Name Project: Getting and Cleaning Data Project
 ## Author:       Giacinto Maggiore
-## Date:         14/03/2016
+## Date:         03/14/2016
 
 
 ## Description:  The script performs the analysis of the data registered from
