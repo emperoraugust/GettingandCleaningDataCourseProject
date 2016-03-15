@@ -74,7 +74,7 @@ colnames(features)<- c("featureNumber", "featureName")
 
 
 
-#------     1. Merge the training and test sets 
+#------     SECTION 1. Merge the training and test sets 
 allSubject <- rbind(subjectTest, subjectTrain)
 colnames(allSubject)<-"subject"    #Set the name of the column 
 allData<- rbind(testData,trainingData)
@@ -83,25 +83,29 @@ colnames(allData) <- features$featureName
 allLabels<-rbind(testLabels,trainingLabels)
 colnames(allLabels)<-"activityNumber"   
 
+#Merge data
 mergedData<-cbind(allSubject,allLabels)
 mergedData<-cbind(data,allData)
 mergedData<-tbl_df(mergedData) 
 
 
 
-#------    2. Extract the measurements on the mean and standard deviation 
-#             for each measurement
+#------    SECTION 2. Extract the measurements on the mean and standard
+#                     deviation for each measurement
 
-featuresMeanStd<-grep("mean\\(\\)|std\\(\\)",features$featureName,value=TRUE)
+#First choose only the features that contanin mean() and std()
+featuresMeanStd<-grep("mean\\(\\)|std\\(\\)",features$featureName,value=TRUE)  
 featuresMeanStd <- union(c("subject","activityNumber"), featuresMeanStd)
-mergedData<- tbl_df(subset(mergedData,select=featuresMeanStd))
+
+#select only the the measurements on the mean and standard deviation
+mergedData<- tbl_df(subset(mergedData,select=featuresMeanStd))  
 
 
 
 
 
-#-------    3. Use descriptive activity names to name the activities 
-#              in the data set
+#-------    SECTION 3. Use descriptive activity names to name the activities 
+#                      in the data set
 
 # Load the activity labels
 activityLabels<-tbl_df(read.table(file.path(filePath,"activity_labels.txt")))
@@ -112,9 +116,10 @@ mergedData<-select(mergedData,-activityNumber)
 
 
 
-#--------    4. Label the data set with descriptive variable names
+#--------   SECTION 4. Label the data set with descriptive variable names
 
-
+# This section substitute the terms contained in the columns of mergedData with 
+# other more readble terms 
 names(mergedData)<-gsub("^t", "time", names(mergedData))
 names(mergedData)<-gsub("^f", "frequency", names(mergedData))
 names(mergedData)<-gsub("Acc", "Accelerometer", names(mergedData))
@@ -126,8 +131,8 @@ names(mergedData)<-gsub("BodyBody", "Body", names(mergedData))
 
 
 
-#--------    5. Create a tidy data set with the average of each variable
-#               for each activity and each subject.
+#-------- SECTION 5. Create a tidy data set with the average of each variable
+#                    for each activity and each subject.
 
-secondData <- ddply(mergedData, .(subject, activityName), function(x) colMeans(x[, 3:66]))
+secondData <- ddply(mergedData, .(subject, activityName), function(x) colMeans(x[, 3:66])) #library(plyr)
 write.table(secondData, "secondData.txt", row.name=FALSE)
